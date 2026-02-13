@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: thirdfort
+      POSTGRES_USER: thirdfort
+      POSTGRES_DB: thirdfort
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U thirdfort"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build: ./server
+    ports:
+      - 3000:3000
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://thirdfort:thirdfort@db:5432/thirdfort?sslmode=disable
+
+  client:
+    build: ./client
+    ports:
+      - 5173:5173
+    depends_on:
+      - server
+
+volumes:
+  pgdata:

@@ -101,6 +101,6 @@ The Go backend is deployable via Docker:
 docker compose up --build
 ```
 
-The Go backend uses a multi-stage build (compile in a builder image, copy the binary into a minimal runtime image). The `docker-compose.yml` defines the service with its host environment variable and needs build directives, port mappings, and potentially health checks added.
+The Go backend uses a multi-stage build (compile in a builder image, copy the binary into a minimal runtime image). Postgres is pinned to version 17 to avoid breaking changes in the v18+ Docker image data directory layout. The `docker-compose.yml` defines all three services with build contexts, port mappings, and health checks.
 
 The frontend will be deployed on Vercel, inspired by Thirdfort's portal (`portal.thirdfort.com`, discovered via [certificate transparency logs](https://crt.sh/?q=thirdfort.com)).
