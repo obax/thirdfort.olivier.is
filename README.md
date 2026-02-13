@@ -67,3 +67,40 @@ And finally, here are some frequently asked questions that you may find useful:
 understanding the problem behind the ask, alongside how you apply that understanding to engineer a solution.
 - We value architectural decisions and code quality over feature completeness. If you run out of time, document what
   you would have done.
+
+## Thoughts
+
+### Current state
+
+The repo contains scaffolding for a two-service architecture: a Go backend and a TypeScript frontend, wired together via Docker Compose. Both services have host environment variables configured (`thirdfort.olivier.is` and `fe-thirdfort.olivier.is`), suggesting reverse-proxy or DNS-based routing in production.
+
+A `DocumentStatus` enum is defined in `src/status.go` with three states: `Pending`, `Verified`, and `Rejected`. This points towards a document verification workflow, which aligns with Thirdfort's identity verification domain.
+
+### What I am doing
+
+- Using [Steve Yegge's Beads](https://github.com/steveyegge/beads) for issue tracking, which lives in the repo alongside the code and works well with AI-assisted workflows.
+- Relying on Context7 to pull up-to-date documentation for newer tools I hadn't used before, like [mise](https://mise.jdx.dev/) for managing tool versions, rather than trawling through web searches.
+
+### What I decided not to do
+
+- Upfront planning and task breakdown. I deferred that entirely to an LLM and let it drive the backlog through Beads, rather than spending time on it myself.
+
+### What needs doing
+
+- **Fix syntax errors** in `status.go` (missing `=` in the const block) and flesh out `main.go` with an actual HTTP server
+- **Build out the Go backend** with endpoints for document submission and status management
+- **Create the TypeScript frontend** for interacting with the API
+- **Write the Dockerfiles** for both services so they can be built and deployed
+- **Complete `docker-compose.yml`** with build contexts, port mappings, and any shared networking
+
+### Deployment
+
+The Go backend is deployable via Docker:
+
+```
+docker compose up --build
+```
+
+The Go backend uses a multi-stage build (compile in a builder image, copy the binary into a minimal runtime image). The `docker-compose.yml` defines the service with its host environment variable and needs build directives, port mappings, and potentially health checks added.
+
+The frontend will be deployed on Vercel, inspired by Thirdfort's portal (`portal.thirdfort.com`, discovered via [certificate transparency logs](https://crt.sh/?q=thirdfort.com)).
