@@ -20,9 +20,14 @@ var validStatuses = map[DocumentStatus]bool{
 }
 
 func (s *DocumentStatus) Scan(src interface{}) error {
-	str, ok := src.(string)
-	if !ok {
-		return fmt.Errorf("document status: expected string, got %T", src)
+	var str string
+	switch v := src.(type) {
+	case string:
+		str = v
+	case []byte:
+		str = string(v)
+	default:
+		return fmt.Errorf("document status: expected string or []byte, got %T", src)
 	}
 	status := DocumentStatus(str)
 	if !validStatuses[status] {
