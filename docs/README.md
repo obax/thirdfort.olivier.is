@@ -82,3 +82,4 @@ The rationale: these tasks have binary correctness (it builds or it does not, th
 - **Tests** -- Add Go handler tests (using `httptest`) and React component tests (using Vitest + Testing Library).
 - **CORS** -- Currently handled by the Vite dev proxy. In production the Go server would need explicit CORS middleware (`gin-contrib/cors`).
 - **CI/CD** -- Add a GitHub Actions workflow to lint, test, and build Docker images on push.
+- **Database migrations** -- Replace the init script with a migration pipeline (e.g. [golang-migrate](https://github.com/golang-migrate/migrate) or [Atlas](https://atlasgo.io/)) so schema changes can be versioned, reviewed in PRs, and rolled back safely.
