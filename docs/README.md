@@ -2,13 +2,13 @@
 
 ## Getting started
 
-Prerequisites: [Docker](https://www.docker.com/) (with Compose v2).
+Prerequisites: [Docker](https://www.docker.com/) (with Compose v2) and [just](https://github.com/casey/just).
 
 ```
-docker compose up --build
+just up
 ```
 
-This starts three services:
+This builds and starts three services:
 
 | Service  | URL                    | Description              |
 |----------|------------------------|--------------------------|
@@ -17,6 +17,16 @@ This starts three services:
 | db       | localhost:5432         | PostgreSQL 17            |
 
 The **Upload** tab lets a user select and upload a PDF, JPEG, or PNG. The **Documents** tab shows all uploads and lets a solicitor verify or reject each one.
+
+Other useful commands:
+
+| Command     | Description                  |
+|-------------|------------------------------|
+| `just up`   | Build and start all services |
+| `just down` | Stop all services            |
+| `just logs` | Tail logs from all services  |
+| `just lint` | Run ESLint on the frontend   |
+| `just db`   | Open a psql shell            |
 
 ## Tech choices
 
