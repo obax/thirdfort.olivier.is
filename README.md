@@ -84,6 +84,7 @@ A `DocumentStatus` enum is defined in `src/status.go` with three states: `Pendin
 ### What I decided not to do
 
 - Upfront planning and task breakdown. I deferred that entirely to an LLM and let it drive the backlog through Beads, rather than spending time on it myself.
+- Writing configuration and scaffolding by hand. I let the LLM handle Dockerfiles, `docker-compose.yml`, build configs, and general project set-up so I could focus my time on the application logic and product decisions.
 
 ### What needs doing
 
