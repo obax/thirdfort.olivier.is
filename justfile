@@ -21,3 +21,14 @@ lint:
 # Open a psql shell
 db:
     docker compose exec db psql -U thirdfort -d thirdfort
+
+# Run all tests
+test: test-server test-client
+
+# Run Go server tests
+test-server:
+    cd server && go test -v ./...
+
+# Run React client tests
+test-client:
+    cd client && npm test
