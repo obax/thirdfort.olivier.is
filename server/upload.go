@@ -17,8 +17,6 @@ var allowedContentTypes = map[string]string{
 	"application/pdf": ".pdf",
 	"image/jpeg":      ".jpg",
 	"image/png":       ".png",
-	"image/gif":       ".gif",
-	"image/webp":      ".webp",
 }
 
 func UploadHandler(db *sql.DB) gin.HandlerFunc {
