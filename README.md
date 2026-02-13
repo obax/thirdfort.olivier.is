@@ -86,11 +86,14 @@ A `DocumentStatus` enum is defined in `src/status.go` with three states: `Pendin
 - Upfront planning and task breakdown. I deferred that entirely to an LLM and let it drive the backlog through Beads, rather than spending time on it myself.
 - Writing configuration and scaffolding by hand. I let the LLM handle Dockerfiles, `docker-compose.yml`, build configs, and general project set-up so I could focus my time on the application logic and product decisions.
 
+### Why Gin over net/http
+
+The initial upload endpoint was built with `net/http`, which meant manual method checks, hand-rolled JSON error responses, and no middleware pipeline. Switching to [Gin](https://gin-gonic.com/) while there was only one handler to migrate kept the churn minimal and gives us method-based routing (GET on a POST-only route returns 405 automatically), consistent JSON error formatting via `gin.H`, and built-in logger/recovery middleware. Adding CORS for the React frontend later is a one-liner with `gin-contrib/cors`.
+
 ### What needs doing
 
-- **Fix syntax errors** in `status.go` (missing `=` in the const block) and flesh out `main.go` with an actual HTTP server
-- **Build out the Go backend** with endpoints for document submission and status management
 - **Create the TypeScript frontend** for interacting with the API
+- **Add list and status-update endpoints** to the Go backend
 - **Write the Dockerfiles** for both services so they can be built and deployed
 - **Complete `docker-compose.yml`** with build contexts, port mappings, and any shared networking
 

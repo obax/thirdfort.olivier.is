@@ -1,14 +1,30 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+	"log"
+	"os"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello World\n")
-	})
+	db, err := InitDB()
+	if err != nil {
+		log.Fatalf("database: %v", err)
+	}
+	defer db.Close()
 
-	http.ListenAndServe(":3000", nil)
+	if err := os.MkdirAll("uploads", 0o755); err != nil {
+		log.Fatalf("creating uploads directory: %v", err)
+	}
+
+	router := gin.Default()
+
+	router.GET("/", func(c *gin.Context) {
+		c.String(200, "Hello World\n")
+	})
+	router.POST("/documents", UploadHandler(db))
+
+	log.Println("server listening on :3000")
+	log.Fatal(router.Run(":3000"))
 }
