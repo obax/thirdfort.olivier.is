@@ -1,1 +1,39 @@
 @import "tailwindcss";
+
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Red+Hat+Text:wght@400;500;600;700&display=swap");
+
+@theme {
+  /* Thirdfort brand colours */
+  --color-tf-blue: #1c70ed;
+  --color-tf-blue-dark: #1559be;
+  --color-tf-teal: #163d44;
+  --color-tf-gold: #d9a057;
+  --color-tf-sage: #ecede9;
+  --color-tf-sage-dark: #b4b8ab;
+  --color-tf-charcoal: #313131;
+  --color-tf-white: #ffffff;
+
+  /* Semantic aliases */
+  --color-primary: var(--color-tf-blue);
+  --color-primary-dark: var(--color-tf-blue-dark);
+  --color-surface: var(--color-tf-sage);
+  --color-surface-dark: var(--color-tf-charcoal);
+  --color-heading: var(--color-tf-teal);
+  --color-body: var(--color-tf-charcoal);
+  --color-accent: var(--color-tf-gold);
+
+  /* Status colours (keep existing Tailwind defaults but define for clarity) */
+  --color-status-pending: #f59e0b;
+  --color-status-verified: #16a34a;
+  --color-status-rejected: #dc2626;
+
+  /* Typography */
+  --font-display: "Lora", serif;
+  --font-sans: "Red Hat Text", system-ui, sans-serif;
+
+  /* Border radius - Thirdfort uses sharp corners for buttons, subtle rounding for cards */
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-full: 9999px;
+}

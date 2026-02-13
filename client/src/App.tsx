@@ -33,25 +33,26 @@ function App() {
   const [tab, setTab] = useState<Tab>('upload')
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white border-b border-gray-200">
-        <div className="max-w-4xl mx-auto flex">
+    <div className="min-h-screen bg-surface font-sans text-body">
+      <nav className="bg-white border-b border-tf-sage-dark/30">
+        <div className="max-w-4xl mx-auto flex items-center gap-6">
+          <span className="py-3 pl-2 font-display text-lg font-medium text-heading">thirdfort</span>
           <button
             onClick={() => setTab('upload')}
-            className={`px-6 py-3 text-sm font-semibold border-b-2 transition-colors ${
+            className={`px-4 py-3 text-sm font-semibold border-b-2 transition-colors ${
               tab === 'upload'
-                ? 'border-blue-600 text-blue-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                ? 'border-primary text-primary'
+                : 'border-transparent text-body hover:text-heading'
             }`}
           >
             Upload
           </button>
           <button
             onClick={() => setTab('documents')}
-            className={`px-6 py-3 text-sm font-semibold border-b-2 transition-colors ${
+            className={`px-4 py-3 text-sm font-semibold border-b-2 transition-colors ${
               tab === 'documents'
-                ? 'border-blue-600 text-blue-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                ? 'border-primary text-primary'
+                : 'border-transparent text-body hover:text-heading'
             }`}
           >
             Documents
@@ -124,11 +125,11 @@ function UploadTab() {
 
   return (
     <div className="max-w-md mx-auto mt-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Upload Document</h1>
+      <h1 className="font-display text-3xl font-medium text-heading mb-6">Upload Document</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="file" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="file" className="block text-sm font-medium text-body mb-1">
             Select a PDF or image
           </label>
           <input
@@ -141,14 +142,14 @@ function UploadTab() {
               setError(null)
               setSuccess(null)
             }}
-            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            className="block w-full text-sm text-body file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
           />
         </div>
 
         <button
           type="submit"
           disabled={!file || uploading}
-          className="w-full rounded bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-primary px-4 py-3 text-sm font-semibold text-white hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {uploading ? 'Uploading...' : 'Upload'}
         </button>
@@ -156,24 +157,24 @@ function UploadTab() {
 
       {uploading && (
         <div className="mt-4">
-          <div className="h-2 rounded bg-gray-200 overflow-hidden">
+          <div className="h-2 bg-tf-sage-dark/30 overflow-hidden">
             <div
-              className="h-full bg-blue-600 transition-all duration-150"
+              className="h-full bg-primary transition-all duration-150"
               style={{ width: `${progress}%` }}
             />
           </div>
-          <p className="mt-1 text-sm text-gray-500 text-right">{progress}%</p>
+          <p className="mt-1 text-sm text-body text-right">{progress}%</p>
         </div>
       )}
 
       {error && (
-        <div className="mt-4 rounded bg-red-50 border border-red-200 p-3 text-sm text-red-700">
+        <div className="mt-4 rounded-md bg-red-50 border border-red-200 p-3 text-sm text-red-700">
           {error}
         </div>
       )}
 
       {success && (
-        <div className="mt-4 rounded bg-green-50 border border-green-200 p-3 text-sm text-green-800">
+        <div className="mt-4 rounded-md bg-green-50 border border-green-200 p-3 text-sm text-green-800">
           <p className="font-semibold mb-1">Upload successful</p>
           <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5 text-xs">
             <dt className="text-green-600">Filename</dt>
@@ -244,27 +245,27 @@ function DocumentsTab() {
   if (loading) {
     return (
       <div className="flex justify-center py-12">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-tf-sage-dark/30 border-t-primary" />
       </div>
     )
   }
 
   return (
     <div className="mt-4">
-      <h1 className="text-2xl font-bold text-gray-900 mb-4">Documents</h1>
+      <h1 className="font-display text-3xl font-medium text-heading mb-4">Documents</h1>
 
       {error && (
-        <div className="mb-4 rounded bg-red-50 border border-red-200 p-3 text-sm text-red-700">
+        <div className="mb-4 rounded-md bg-red-50 border border-red-200 p-3 text-sm text-red-700">
           {error}
         </div>
       )}
 
       {documents.length === 0 ? (
-        <p className="text-gray-500 text-sm">No documents uploaded yet.</p>
+        <p className="text-body text-sm">No documents uploaded yet.</p>
       ) : (
-        <div className="overflow-x-auto rounded border border-gray-200 bg-white">
+        <div className="overflow-x-auto rounded-md border border-tf-sage-dark/30 bg-white">
           <table className="min-w-full text-sm">
-            <thead className="bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <thead className="bg-surface text-left text-xs font-semibold text-body uppercase tracking-wider">
               <tr>
                 <th className="px-4 py-3">Filename</th>
                 <th className="px-4 py-3">Type</th>
@@ -274,32 +275,32 @@ function DocumentsTab() {
                 <th className="px-4 py-3">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-tf-sage-dark/20">
               {documents.map((doc) => (
                 <tr key={doc.id}>
-                  <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{doc.filename}</td>
-                  <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{doc.content_type}</td>
-                  <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{formatBytes(doc.file_size)}</td>
+                  <td className="px-4 py-3 font-medium text-heading whitespace-nowrap">{doc.filename}</td>
+                  <td className="px-4 py-3 text-body whitespace-nowrap">{doc.content_type}</td>
+                  <td className="px-4 py-3 text-body whitespace-nowrap">{formatBytes(doc.file_size)}</td>
                   <td className="px-4 py-3 whitespace-nowrap">
                     <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold ${statusBadge[doc.status] ?? 'bg-gray-100 text-gray-800'}`}>
                       {doc.status}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{relativeTime(doc.uploaded_at)}</td>
+                  <td className="px-4 py-3 text-body whitespace-nowrap">{relativeTime(doc.uploaded_at)}</td>
                   <td className="px-4 py-3 whitespace-nowrap">
                     {doc.status === 'pending' && (
                       <span className="flex gap-2">
                         <button
                           disabled={patchingId === doc.id}
                           onClick={() => updateStatus(doc.id, 'verified')}
-                          className="rounded bg-green-600 px-3 py-1 text-xs font-semibold text-white hover:bg-green-700 disabled:opacity-50"
+                          className="bg-green-600 px-3 py-1 text-xs font-semibold text-white hover:bg-green-700 disabled:opacity-50 transition-colors"
                         >
                           Verify
                         </button>
                         <button
                           disabled={patchingId === doc.id}
                           onClick={() => updateStatus(doc.id, 'rejected')}
-                          className="rounded bg-red-600 px-3 py-1 text-xs font-semibold text-white hover:bg-red-700 disabled:opacity-50"
+                          className="bg-red-600 px-3 py-1 text-xs font-semibold text-white hover:bg-red-700 disabled:opacity-50 transition-colors"
                         >
                           Reject
                         </button>

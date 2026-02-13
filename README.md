@@ -76,15 +76,24 @@ The repo contains scaffolding for a two-service architecture: a Go backend and a
 
 A `DocumentStatus` enum is defined in `src/status.go` with three states: `Pending`, `Verified`, and `Rejected`. This points towards a document verification workflow, which aligns with Thirdfort's identity verification domain.
 
-### What I am doing
+### How I worked
 
-- Using [Steve Yegge's Beads](https://github.com/steveyegge/beads) for issue tracking, which lives in the repo alongside the code and works well with AI-assisted workflows.
-- Relying on Context7 to pull up-to-date documentation for newer tools I hadn't used before, like [mise](https://mise.jdx.dev/) for managing tool versions, rather than trawling through web searches.
+I treated the LLM as a junior engineer I could delegate commodity work to, so I could spend my limited time on the decisions that actually matter: API design, data modelling, error handling semantics, and product thinking.
 
-### What I decided not to do
+**What I delegated to agents:**
+- Backlog creation and task breakdown (via [Beads](https://github.com/steveyegge/beads), an in-repo issue tracker designed for AI workflows).
+- Scaffolding and configuration: Dockerfiles, `docker-compose.yml`, build configs, Dependabot, the justfile.
+- Visual brand extraction: an agent used Puppeteer to scrape thirdfort.com, extract computed styles (colours, fonts, radii, shadows), and produce Tailwind v4 theme tokens. Applying those tokens to the UI was also agent work.
+- Documentation lookups via Context7 for tools I hadn't used before, like [mise](https://mise.jdx.dev/).
 
-- Upfront planning and task breakdown. I deferred that entirely to an LLM and let it drive the backlog through Beads, rather than spending time on it myself.
-- Writing configuration and scaffolding by hand. I let the LLM handle Dockerfiles, `docker-compose.yml`, build configs, and general project set-up so I could focus my time on the application logic and product decisions.
+**What I did myself:**
+- API contract design (which endpoints, which HTTP methods, what the request/response shapes look like).
+- The upload handler's content-type sniffing logic and its cleanup-on-failure behaviour.
+- Deciding on a Postgres enum for document status rather than a plain string column.
+- The frontend's data flow: `XMLHttpRequest` for upload progress, optimistic updates after PATCH.
+- All architectural trade-off decisions documented in `docs/README.md`.
+
+The split is deliberate. Scaffolding, config, and branding are commodity tasks where correctness is binary and easily verified. Design decisions and error semantics are where human judgement earns its keep.
 
 ### Why Gin over net/http
 
