@@ -23,6 +23,7 @@ func main() {
 	router.GET("/", func(c *gin.Context) {
 		c.String(200, "Hello World\n")
 	})
+	router.GET("/documents", ListHandler(db))
 	router.POST("/documents", UploadHandler(db))
 
 	log.Println("server listening on :3000")
