@@ -36,6 +36,20 @@ func ListDocuments(db *sql.DB) ([]Document, error) {
 	return docs, rows.Err()
 }
 
+func UpdateDocumentStatus(db *sql.DB, id string, status DocumentStatus) (*Document, error) {
+	var d Document
+	err := db.QueryRow(
+		`UPDATE documents SET status = $1, updated_at = now()
+		 WHERE id = $2
+		 RETURNING id, filename, content_type, file_size, status, uploaded_at, updated_at`,
+		status, id,
+	).Scan(&d.ID, &d.Filename, &d.ContentType, &d.FileSize, &d.Status, &d.UploadedAt, &d.UpdatedAt)
+	if err != nil {
+		return nil, err
+	}
+	return &d, nil
+}
+
 func InsertDocument(db *sql.DB, doc *Document) error {
 	return db.QueryRow(
 		`INSERT INTO documents (filename, content_type, file_size, status)
