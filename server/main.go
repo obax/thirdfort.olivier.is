@@ -26,6 +26,7 @@ func main() {
 	router.GET("/documents", ListHandler(db))
 	router.POST("/documents", UploadHandler(db))
 	router.PATCH("/documents/:id", UpdateHandler(db))
+	router.GET("/documents/:id/file", DownloadHandler(db))
 
 	log.Println("server listening on :3000")
 	log.Fatal(router.Run(":3000"))

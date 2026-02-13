@@ -77,10 +77,11 @@ func UploadHandler(db *sql.DB) gin.HandlerFunc {
 		}
 
 		doc := &Document{
-			Filename:    fh.Filename,
-			ContentType: contentType,
-			FileSize:    written,
-			Status:      StatusPending,
+			Filename:     fh.Filename,
+			DiskFilename: diskName,
+			ContentType:  contentType,
+			FileSize:     written,
+			Status:       StatusPending,
 		}
 
 		if err := InsertDocument(db, doc); err != nil {
