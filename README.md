@@ -46,14 +46,16 @@ The split is deliberate. Scaffolding, config, and branding are commodity tasks w
 
 The initial upload endpoint was built with `net/http`, which meant manual method checks, hand-rolled JSON error responses, and no middleware pipeline. Switching to [Gin](https://gin-gonic.com/) while there was only one handler to migrate kept the churn minimal and gives us method-based routing (GET on a POST-only route returns 405 automatically), consistent JSON error formatting via `gin.H`, and built-in logger/recovery middleware. Adding CORS for the React frontend later is a one-liner with `gin-contrib/cors`.
 
-### Deployment
+### Local development
 
-The Go backend is deployable via Docker:
+To run all three services locally:
 
 ```
 docker compose up --build
 ```
 
-The Go backend uses a multi-stage build (compile in a builder image, copy the binary into a minimal runtime image). Postgres is pinned to version 17 to avoid breaking changes in the v18+ Docker image data directory layout. The `docker-compose.yml` defines all three services with build contexts, port mappings, and health checks.
+This starts the Go backend, the React frontend, and a PostgreSQL database with health checks and volume mounts. See [`docs/README.md`](./docs/README.md) for the full getting-started guide.
 
-The frontend will be deployed on Vercel, inspired by Thirdfort's portal (`portal.thirdfort.com`, discovered via [certificate transparency logs](https://crt.sh/?q=thirdfort.com)).
+### Deployment
+
+The Go backend deploys to [Fly.io](https://fly.io/) via a GitHub Actions workflow (multi-stage Docker build, compiled into a distroless runtime image). The frontend is deployed on [Vercel](https://vercel.com/), inspired by Thirdfort's portal (`portal.thirdfort.com`, discovered via [certificate transparency logs](https://crt.sh/?q=thirdfort.com)).
