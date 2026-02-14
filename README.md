@@ -2,6 +2,8 @@
 
 A prototype document upload and verification system, built as a take-home exercise for [Thirdfort](https://thirdfort.com/). The full submission write-up (assumptions, trade-offs, areas for improvement) lives in [`docs/README.md`](./docs/README.md).
 
+**Live demo:** [fse-takehome-exercise-olivier-bacs.vercel.app](https://fse-takehome-exercise-olivier-bacs.vercel.app/)
+
 ## The brief
 
 Build a proof of concept that lets a user upload identity documents (passport photo, mortgage offer letter, etc.) via a web portal so they no longer need to visit their solicitor's office in person.
