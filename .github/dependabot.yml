@@ -23,8 +23,12 @@ updates:
     directory: /server
     schedule:
       interval: weekly
+    ignore:
+      - dependency-name: golang
 
   - package-ecosystem: docker
     directory: /client
     schedule:
       interval: weekly
+    ignore:
+      - dependency-name: node
