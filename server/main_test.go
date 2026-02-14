@@ -20,10 +20,10 @@ func setupTestRouter(t *testing.T) (*gin.Engine, *sql.DB) {
 
 	db, err := sql.Open("postgres", dsn)
 	if err != nil {
-		t.Fatalf("opening database: %v", err)
+		t.Skipf("skipping integration test: %v", err)
 	}
 	if err := db.Ping(); err != nil {
-		t.Fatalf("pinging database: %v", err)
+		t.Skipf("skipping integration test: %v", err)
 	}
 
 	// Clean up test data before and after each test.
