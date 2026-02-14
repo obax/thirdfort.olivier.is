@@ -36,3 +36,21 @@ jobs:
       - run: npm run lint
       - run: npm run build
       - run: npm test
+
+  deploy-server:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [server]
+    runs-on: ubuntu-latest
+    environment: Production
+    defaults:
+      run:
+        working-directory: server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl launch --no-deploy --copy-config --yes
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - run: flyctl deploy
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
