@@ -94,7 +94,7 @@ function App() {
               <p className="text-sm text-gray-400 mt-1">Fullstack Engineering Assessment</p>
             </div>
             <a
-              href="https://github.com/obax/fse-takehome-exercise-olivier-bacs"
+              href="https://github.com/obax/thirdfort.olivier.is"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
